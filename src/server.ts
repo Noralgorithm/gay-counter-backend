@@ -7,8 +7,8 @@ import {
   InterServerEvents,
   SocketData,
 } from './server.interfaces.d'
-import GayCounterSocketHandler from './gay-counter/gay-counter-socket-handler'
-import { GayCounterSocketHandlerInterface } from './gay-counter/gay-counter-socket-handler.interface'
+import GayCounterSocketHandler from './gay-counter/application/gay-counter-socket-handler'
+import { GayCounterSocketHandlerInterface } from './gay-counter/application/gay-counter-socket-handler.interface'
 
 class Server {
   private server: http.Server
@@ -49,13 +49,17 @@ class Server {
         this.gayCounterSocketHandler.onFetchHistory(socket)
       })
 
+      socket.on('createPlayer', (name: string, img: string) => {
+        this.gayCounterSocketHandler.onCreatePlayer(socket, name, img)
+      })
+
       socket.on('disconnect', () => {
         console.log(`Client disconnected: ${socket.id}`)
       })
     })
   }
 
-  start(port: number) {
+  start(port: string) {
     this.server.listen(port, () => {
       console.log(`Servidor escuchando en el puerto ${port}`)
     })

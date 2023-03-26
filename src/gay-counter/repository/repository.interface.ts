@@ -1,7 +1,8 @@
-import { ResponseInterface } from "../domain/response.interface"
+import { Response } from "../domain/response.interface"
 
 export interface Repository {
-  incrementCounter(id: number, quantity: number): ResponseInterface
-  getPlayers(): ResponseInterface
-  getHistory(): ResponseInterface
+  incrementCounter(id: number, quantity: number): Promise<Response>
+  getPlayers(): Promise<Response>
+  getHistory(): Promise<Response>
+  createPlayer(name: string, img: string): Promise<Response>
 }

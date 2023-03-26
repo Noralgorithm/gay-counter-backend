@@ -1,7 +1,7 @@
 import { Player } from "./player.interface"
 import { HistoryEntry } from "./history-entry.interface"
 
-export interface ResponseInterface {
+export interface Response {
   success: boolean
   message: string
   item?: {

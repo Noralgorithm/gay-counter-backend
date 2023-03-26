@@ -1,6 +1,6 @@
 import { DefaultEventsMap } from "socket.io/dist/typed-events"
 import { GayCounterSocketHandlerInterface } from "./gay-counter-socket-handler.interface"
-import { Repository } from "./repository/repository.interface"
+import { Repository } from "../repository/repository.interface"
 import { Server, Socket } from "socket.io"
 
 class GayCounterSocketHandler implements GayCounterSocketHandlerInterface {
@@ -17,9 +17,10 @@ class GayCounterSocketHandler implements GayCounterSocketHandlerInterface {
     io.emit('updatedCounter', response)
   }
 
-  onFetchPlayers(socket: Socket): void {
-    const response = this.repository.getPlayers()
+  async onFetchPlayers(socket: Socket): Promise<void> {
+    const response = await this.repository.getPlayers()
     console.log('Fetched Players')
+    console.log(response)
     socket.emit('sendedPlayers', response)
   }
 
@@ -29,6 +30,16 @@ class GayCounterSocketHandler implements GayCounterSocketHandlerInterface {
     socket.emit('sendedHistory', response)
   }
 
+  onCreatePlayer(socket: Socket, name: string, img: string): void {
+    try {
+      this.repository.createPlayer(name, img)
+      console.log('Created Player')
+      socket.emit('Created player successfully!')
+    } catch(e) {
+      console.log('Error creating player')
+      socket.emit('Error creating player')
+    }
+  }
 }
 
 export default GayCounterSocketHandler
