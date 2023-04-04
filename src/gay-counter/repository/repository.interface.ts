@@ -5,4 +5,5 @@ export interface Repository {
   getPlayers(): Promise<Response>
   getHistory(): Promise<Response>
   createPlayer(name: string, img: string): Promise<Response>
+  getCount(): Promise<Response>
 }

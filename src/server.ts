@@ -53,6 +53,10 @@ class Server {
         this.gayCounterSocketHandler.onCreatePlayer(socket, name, img)
       })
 
+      socket.on('getCounter', () => {
+        this.gayCounterSocketHandler.onGetCounter(socket)
+      })
+
       socket.on('disconnect', () => {
         console.log(`Client disconnected: ${socket.id}`)
       })

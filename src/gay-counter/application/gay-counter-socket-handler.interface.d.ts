@@ -6,4 +6,5 @@ export interface GayCounterSocketHandlerInterface {
   onFetchPlayers(socket: Socket): void
   onFetchHistory(socket: Socket): void
   onCreatePlayer(socket: Socket, name: string, img: string): void
+  onGetCounter(socket: Socket): void
 }

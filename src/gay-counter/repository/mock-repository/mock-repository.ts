@@ -31,6 +31,11 @@ class mockRepository implements Repository {
       resolve({ success: true, message: 'xd', items: history })
     )
   }
+  getCount(): Promise<Response> {
+    return new Promise((resolve, reject) =>
+      resolve({ success: true, message: 'xd' })
+    )
+  }
 }
 
 export default mockRepository

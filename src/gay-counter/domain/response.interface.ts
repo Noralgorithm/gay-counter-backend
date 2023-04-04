@@ -6,6 +6,6 @@ export interface Response {
   message: string
   item?: {
     counter: number
-  }
+  } | Number
   items?: Array<Player | HistoryEntry>
 }

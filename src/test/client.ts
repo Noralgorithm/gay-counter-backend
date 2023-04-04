@@ -21,6 +21,15 @@ socket.on('sendedHistory', (res: Response) => {
   console.log(res)
 })
 
+socket.on('updatedCounter', (res: Response) => {
+  console.log(res)
+})
+
+socket.on('fetchedCount', (res: Response) => {
+  console.log(res)
+})
+
+/* 
 setTimeout(() => {
   socket.emit('createPlayer', 'Rosas', 'www.xvideos.com')
   socket.emit('createPlayer', 'Mamen', 'www.google.com')
@@ -29,4 +38,10 @@ setTimeout(() => {
   socket.emit('createPlayer', 'Hector', 'www.google.com')
   socket.emit('createPlayer', 'Velma', 'www.google.com')
   socket.emit('createPlayer', 'Paniagua', 'www.google.com')
-}, 100)
+}, 100) 
+*/
+
+setTimeout(() => {
+  
+  socket.emit('getCounter')
+}, 1000)

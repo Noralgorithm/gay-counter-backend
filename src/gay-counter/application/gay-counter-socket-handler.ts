@@ -11,10 +11,11 @@ class GayCounterSocketHandler implements GayCounterSocketHandlerInterface {
     this.repository = repository
   }
 
-  onIncrementCounter(io: Server, id: number, quantity: number) {
-    const response = this.repository.incrementCounter(id, quantity)
+  async onIncrementCounter(io: Server, id: number, quantity: number) {
+    await this.repository.incrementCounter(id, quantity)
     console.log('Incremented counter by ', quantity, ' to player with ID: ', id)
-    io.emit('updatedCounter', response)
+    const newCount = await this.repository.getCount()
+    io.emit('updatedCounter', newCount)
   }
 
   async onFetchPlayers(socket: Socket): Promise<void> {
@@ -24,20 +25,30 @@ class GayCounterSocketHandler implements GayCounterSocketHandlerInterface {
     socket.emit('sendedPlayers', response)
   }
 
-  onFetchHistory(socket: Socket): void {
-    const response = this.repository.getHistory()
+  async onFetchHistory(socket: Socket): Promise<void> {
+    const response = await this.repository.getHistory()
     console.log('Fetched History')
     socket.emit('sendedHistory', response)
   }
 
-  onCreatePlayer(socket: Socket, name: string, img: string): void {
+  async onCreatePlayer(socket: Socket, name: string, img: string): Promise<void> {
     try {
-      this.repository.createPlayer(name, img)
+      await this.repository.createPlayer(name, img)
       console.log('Created Player')
-      socket.emit('Created player successfully!')
+      socket.emit('CreatedPlayer', {success: true, message: 'Player created successfully!'})
     } catch(e) {
       console.log('Error creating player')
-      socket.emit('Error creating player')
+      socket.emit('CreatedPlayer', {success: false, message: 'Player creation failed!'})
+    }
+  }
+
+  async onGetCounter(socket: Socket): Promise<void> {
+    try {
+      const response = await this.repository.getCount()
+      console.log('Fetched count')
+      socket.emit('fetchedCount', response)
+    } catch(e) {
+      socket.emit('fetchedCount', {success: false, message: 'Failed to fetch count!'})
     }
   }
 }

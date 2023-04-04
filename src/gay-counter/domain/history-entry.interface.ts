@@ -4,3 +4,5 @@ export interface HistoryEntry {
   playerId: number
   createdAt: string
 }
+
+export type CreatedHistory = Pick<HistoryEntry, 'playerId' | 'quantity'>
