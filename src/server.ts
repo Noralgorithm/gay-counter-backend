@@ -1,4 +1,4 @@
-import express, { Express, Application } from 'express'
+import express, { Express, Application, NextFunction } from 'express'
 import { Server as SocketServer } from 'socket.io'
 import http from 'http'
 import {
@@ -9,6 +9,7 @@ import {
 } from './server.interfaces.d'
 import GayCounterSocketHandler from './gay-counter/application/gay-counter-socket-handler'
 import { GayCounterSocketHandlerInterface } from './gay-counter/application/gay-counter-socket-handler.interface'
+import { APITOKEN } from './config'
 
 class Server {
   private server: http.Server
@@ -31,6 +32,12 @@ class Server {
 
   init() {
     this.io.on('connection', socket => {
+      this.io.use((socket, next) => {
+        const token = socket.handshake.auth.token
+        if (token !== APITOKEN) next(new Error('Authentication failed'))
+        next()
+      })
+
       console.log(`New client connected: ${socket.id}`)
 
       socket.on('hello', arg => {

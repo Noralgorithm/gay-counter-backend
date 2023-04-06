@@ -29,7 +29,7 @@ export class SqlRepository implements Repository {
   async getPlayers(): Promise<Response> {
     try {
       const [result] = await promisePool.query(
-        'SELECT name, score, img, updatedAt FROM players ORDER BY name ASC'
+        'SELECT * FROM players ORDER BY name ASC'
       )
       return {
         success: true,
@@ -58,8 +58,8 @@ export class SqlRepository implements Repository {
 
   async getHistory(): Promise<Response> {
     try {
-      const [result] = await promisePool(
-        'SELECT name, score, img, updatedAt FROM players ORDER BY id DESC'
+      const [result] = await promisePool.query(
+        'SELECT p.name, p.img, h.quantity, h.createdAt, h.id FROM players p INNER JOIN history h ON p.id = h.playerId ORDER BY h.id DESC'
       )
       return {
         success: true,
