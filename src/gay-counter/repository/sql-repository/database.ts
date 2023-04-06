@@ -1,11 +1,13 @@
 import mysql from 'mysql2'
-import { DBHOST, DBNAME, DBUSER } from '../../../config'
-import { synchronizeTables } from './sync'
+import { DBHOST, DBPASSWORD, DBNAME, DBUSER } from '../../../config'
+
+console.log('asdasd')
 
 const pool = mysql.createPool({
   database: DBNAME,
   host: DBHOST,
   user: DBUSER,
+  password: DBPASSWORD
 })
 
 pool.getConnection((err, connection) => {
