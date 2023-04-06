@@ -25,6 +25,11 @@ class GayCounterSocketHandler implements GayCounterSocketHandlerInterface {
     socket.emit('sendedPlayers', response)
   }
 
+  async onFetchRanking(socket: Socket): Promise<void> {
+    const response = await this.repository.getRanking()
+    socket.emit('sendedRanking', response)
+  }
+
   async onFetchHistory(socket: Socket): Promise<void> {
     const response = await this.repository.getHistory()
     console.log('Fetched History')
@@ -46,9 +51,9 @@ class GayCounterSocketHandler implements GayCounterSocketHandlerInterface {
     try {
       const response = await this.repository.getCount()
       console.log('Fetched count')
-      socket.emit('fetchedCount', response)
+      socket.emit('sendedCount', response)
     } catch(e) {
-      socket.emit('fetchedCount', {success: false, message: 'Failed to fetch count!'})
+      socket.emit('sendedCount', {success: false, message: 'Failed to fetch count!'})
     }
   }
 }

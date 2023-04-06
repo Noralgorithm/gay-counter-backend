@@ -28,8 +28,23 @@ export class SqlRepository implements Repository {
 
   async getPlayers(): Promise<Response> {
     try {
-      const [result] = await promisePool(
-        'SELECT name, score, img, updatedAt FROM players'
+      const [result] = await promisePool.query(
+        'SELECT name, score, img, updatedAt FROM players ORDER BY name ASC'
+      )
+      return {
+        success: true,
+        message: 'Players fetched successfully',
+        items: result,
+      }
+    } catch (e) {
+      return { success: false, message: 'Error fetching players' }
+    }
+  }
+  
+  async getRanking(): Promise<Response> {
+    try {
+      const [result] = await promisePool.query(
+        'SELECT name, score, img, updatedAt FROM players ORDER BY score DESC'
       )
       return {
         success: true,
@@ -44,7 +59,7 @@ export class SqlRepository implements Repository {
   async getHistory(): Promise<Response> {
     try {
       const [result] = await promisePool(
-        'SELECT name, score, img, updatedAt FROM players'
+        'SELECT name, score, img, updatedAt FROM players ORDER BY id DESC'
       )
       return {
         success: true,

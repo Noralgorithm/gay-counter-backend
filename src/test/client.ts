@@ -25,8 +25,12 @@ socket.on('updatedCounter', (res: Response) => {
   console.log(res)
 })
 
-socket.on('fetchedCount', (res: Response) => {
+socket.on('sendedCount', (res: Response) => {
   console.log(res)
+})
+
+socket.on('sendedRanking', (res: Response) => {
+  console.log('RANKING => ', res)
 })
 
 /* 
@@ -42,6 +46,7 @@ setTimeout(() => {
 */
 
 setTimeout(() => {
-  
-  socket.emit('getCounter')
+  socket.emit('fetchPlayers')
+  socket.emit('fetchRanking')
+  socket.emit('fetchHistory')
 }, 1000)

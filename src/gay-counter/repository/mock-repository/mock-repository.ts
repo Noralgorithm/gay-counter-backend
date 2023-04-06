@@ -36,6 +36,11 @@ class mockRepository implements Repository {
       resolve({ success: true, message: 'xd' })
     )
   }
+  getRanking(): Promise<Response> {
+    return new Promise((resolve, reject) =>
+      resolve({ success: true, message: 'xd' })
+    )
+  }
 }
 
 export default mockRepository

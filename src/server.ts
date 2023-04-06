@@ -45,6 +45,10 @@ class Server {
         this.gayCounterSocketHandler.onFetchPlayers(socket)
       })
 
+      socket.on('fetchRanking', () => {
+        this.gayCounterSocketHandler.onFetchRanking(socket)
+      })
+
       socket.on('fetchHistory', () => {
         this.gayCounterSocketHandler.onFetchHistory(socket)
       })
