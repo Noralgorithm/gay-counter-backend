@@ -7,7 +7,6 @@ import {
   InterServerEvents,
   SocketData,
 } from './server.interfaces.d'
-import GayCounterSocketHandler from './gay-counter/application/gay-counter-socket-handler'
 import { GayCounterSocketHandlerInterface } from './gay-counter/application/gay-counter-socket-handler.interface'
 import { APITOKEN } from './config'
 
@@ -26,12 +25,18 @@ class Server {
     gayCounterSocketHandler: GayCounterSocketHandlerInterface
   ) {
     this.server = http.createServer(app)
-    this.io = new SocketServer(this.server)
+    this.io = new SocketServer(this.server, {
+      cors: {
+        origin: ['*'],
+        methods: ['GET', 'POST']
+      }
+    })
     this.gayCounterSocketHandler = gayCounterSocketHandler
   }
 
   init() {
     this.io.on('connection', socket => {
+
       this.io.use((socket, next) => {
         const token = socket.handshake.auth.token
         if (token !== APITOKEN) next(new Error('Authentication failed'))

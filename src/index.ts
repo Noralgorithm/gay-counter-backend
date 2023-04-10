@@ -9,4 +9,4 @@ const gayCounterSocketHandler = new GayCounterSocketHandler(new SqlRepository)
 const server = new Server(app, gayCounterSocketHandler)
 
 server.init()
-server.start(PORT !== undefined ? PORT : '3003')
+server.start(PORT !== undefined ? PORT : '3002')

@@ -1,13 +1,8 @@
 import { Socket, io } from 'socket.io-client'
-import {
-  ServerToClientEvents,
-  ClientToServerEvents,
-} from '../server.interfaces'
-import { Response } from '../gay-counter/domain/response.interface'
 
 console.log("Hello, world!")
 
-const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+const socket = io(
   'http://localhost:3002/', {
     auth: {
       token: 'jesusmelapela123melacasco.com'
@@ -24,23 +19,23 @@ socket.on('connect', () => {
   console.log('Connected to server!')
 })
 
-socket.on('sendedPlayers', (res: Response) => {
+socket.on('sendedPlayers', (res) => {
   console.log(res)
 })
 
-socket.on('sendedHistory', (res: Response) => {
+socket.on('sendedHistory', (res) => {
   console.log(res)
 })
 
-socket.on('updatedCounter', (res: Response) => {
+socket.on('updatedCounter', (res) => {
   console.log(res)
 })
 
-socket.on('sendedCount', (res: Response) => {
+socket.on('sendedCount', (res) => {
   console.log(res)
 })
 
-socket.on('sendedRanking', (res: Response) => {
+socket.on('sendedRanking', (res) => {
   console.log('RANKING => ', res)
 })
 
