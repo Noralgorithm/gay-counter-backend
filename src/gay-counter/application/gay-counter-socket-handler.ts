@@ -4,12 +4,7 @@ import { Repository } from "../repository/repository.interface"
 import { Server, Socket } from "socket.io"
 
 class GayCounterSocketHandler implements GayCounterSocketHandlerInterface {
-
-  private repository: Repository
-
-  constructor(repository: Repository) {
-    this.repository = repository
-  }
+  constructor(private repository: Repository) {}
 
   async onIncrementCounter(io: Server, id: number, quantity: number) {
     await this.repository.incrementCounter(id, quantity)
